@@ -42,7 +42,8 @@
             android:exported="false" />
         <activity
             android:name=".DonorUpdateFoodActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:parentActivityName=".DonorActivity"/>
         <activity
             android:name=".DonorCreateFoodActivity"
             android:exported="false"

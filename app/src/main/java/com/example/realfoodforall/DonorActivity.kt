@@ -39,8 +39,6 @@ class DonorActivity : AppCompatActivity() {
 
         setSupportActionBar(binding.toolbarDonorHome)
 
-
-
         val gridLayoutManager = GridLayoutManager(this@DonorActivity, 1)
         binding.recyclerViewFoodDonation.layoutManager = gridLayoutManager
 
@@ -64,8 +62,10 @@ class DonorActivity : AppCompatActivity() {
                     val foodClass = itemSnapshot.getValue(DonorFoodData::class.java)
 
                     foodClass?.foodDonationId = foodDonationId
-                    foodList.add(foodClass!!)
 
+                    if(foodClass?.foodDonorUID == mAuth.currentUser?.uid){
+                        foodList.add(foodClass!!)
+                    }
 
                 }
                 adapter.notifyDataSetChanged()

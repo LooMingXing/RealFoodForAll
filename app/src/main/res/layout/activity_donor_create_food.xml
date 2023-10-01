@@ -37,81 +37,31 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.96" />
 
-    <EditText
-        android:id="@+id/editTextFoodName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:hint="@string/food_name"
-        android:inputType="text"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFoodName"
-        app:layout_constraintStart_toEndOf="@+id/textViewFoodName"
-        app:layout_constraintTop_toTopOf="@+id/textViewFoodName" />
-
-    <EditText
-        android:id="@+id/editTextFoodPortion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:ems="10"
-        android:hint="@string/food_portion"
-        android:inputType="numberDecimal"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFoodPortion"
-        app:layout_constraintStart_toEndOf="@+id/textViewFoodPortion"
-        app:layout_constraintTop_toTopOf="@+id/textViewFoodPortion"
-        app:layout_constraintVertical_bias="0.555" />
-
-    <TextView
-        android:id="@+id/textViewFoodLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/food_location"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.098"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.477" />
-
     <ImageView
         android:id="@+id/imageViewFoodImage"
         android:layout_width="150dp"
         android:layout_height="150dp"
+        android:layout_marginTop="8dp"
         android:src="@drawable/ic_android_black_24dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.107"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.067" />
-
-    <EditText
-        android:id="@+id/editTextFromTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:ems="10"
-        android:hint="@string/food_distribution_from_time"
-        android:inputType="time"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewFromTime"
-        app:layout_constraintStart_toEndOf="@+id/textViewFromTime"
-        app:layout_constraintTop_toTopOf="@+id/textViewFromTime"
-        app:layout_constraintVertical_bias="0.555" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbarDonorCreateFood"
+        app:layout_constraintVertical_bias="0.0" />
 
     <TextView
-        android:id="@+id/textViewFoodPortion"
+        android:id="@+id/textViewFoodName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/food_portion"
+        android:text="@string/food_name"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintHorizontal_bias="0.169"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.387" />
+        app:layout_constraintVertical_bias="0.335" />
 
     <TextView
         android:id="@+id/textViewToTime"
@@ -124,45 +74,7 @@
         app:layout_constraintHorizontal_bias="0.245"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.75" />
-
-    <TextView
-        android:id="@+id/textViewFromTime"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/food_distribution_from_time"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.187"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.663" />
-
-    <EditText
-        android:id="@+id/editTextFoodDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:ems="10"
-        android:hint="@string/food_distribution_date"
-        android:inputType="date"
-        app:layout_constraintBottom_toBottomOf="@+id/textViewDistributionDate"
-        app:layout_constraintStart_toEndOf="@+id/textViewDistributionDate"
-        app:layout_constraintTop_toTopOf="@+id/textViewDistributionDate" />
-
-    <TextView
-        android:id="@+id/textViewDistributionDate"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/food_distribution_date"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.308"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.572" />
+        app:layout_constraintVertical_bias="0.785" />
 
     <EditText
         android:id="@+id/editTextFoodAddress"
@@ -178,27 +90,43 @@
         app:layout_constraintVertical_bias="0.444" />
 
     <TextView
-        android:id="@+id/textViewFoodName"
+        android:id="@+id/textViewFromTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/food_name"
+        android:text="@string/food_distribution_from_time"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.169"
+        app:layout_constraintHorizontal_bias="0.187"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.299" />
+        app:layout_constraintVertical_bias="0.698" />
 
-    <Button
-        android:id="@+id/buttonChooseImage"
+    <TextView
+        android:id="@+id/textViewDistributionDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:text="@string/choose_image"
-        app:layout_constraintBottom_toBottomOf="@+id/imageViewFoodImage"
-        app:layout_constraintStart_toEndOf="@+id/imageViewFoodImage"
-        app:layout_constraintTop_toTopOf="@+id/imageViewFoodImage" />
+        android:text="@string/food_distribution_date"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.308"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.607" />
+
+    <TextView
+        android:id="@+id/textViewFoodPortion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/food_portion"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.138"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.423" />
 
     <EditText
         android:id="@+id/editTextToTime"
@@ -210,7 +138,82 @@
         android:inputType="time"
         app:layout_constraintBottom_toBottomOf="@+id/textViewToTime"
         app:layout_constraintStart_toEndOf="@+id/textViewToTime"
-        app:layout_constraintTop_toTopOf="@+id/textViewToTime" />
+        app:layout_constraintTop_toTopOf="@+id/textViewToTime"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <EditText
+        android:id="@+id/editTextFromTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ems="10"
+        android:hint="@string/food_distribution_from_time"
+        android:inputType="time"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFromTime"
+        app:layout_constraintStart_toEndOf="@+id/textViewFromTime"
+        app:layout_constraintTop_toTopOf="@+id/textViewFromTime"
+        app:layout_constraintVertical_bias="0.555" />
+
+    <TextView
+        android:id="@+id/textViewFoodLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/food_location"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.098"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.512" />
+
+    <EditText
+        android:id="@+id/editTextFoodDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:ems="10"
+        android:hint="@string/food_distribution_date"
+        android:inputType="date"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewDistributionDate"
+        app:layout_constraintStart_toEndOf="@+id/textViewDistributionDate"
+        app:layout_constraintTop_toTopOf="@+id/textViewDistributionDate"
+        app:layout_constraintVertical_bias="0.444" />
+
+    <EditText
+        android:id="@+id/editTextFoodPortion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="@string/food_portion"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFoodPortion"
+        app:layout_constraintStart_toEndOf="@+id/textViewFoodPortion"
+        app:layout_constraintTop_toTopOf="@+id/textViewFoodPortion"
+        app:layout_constraintVertical_bias="0.555" />
+
+    <EditText
+        android:id="@+id/editTextFoodName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="10"
+        android:hint="@string/food_name"
+        android:inputType="text"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFoodName"
+        app:layout_constraintStart_toEndOf="@+id/textViewFoodName"
+        app:layout_constraintTop_toTopOf="@+id/textViewFoodName" />
+
+    <Button
+        android:id="@+id/buttonChooseImage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="@string/choose_image"
+        app:layout_constraintBottom_toBottomOf="@+id/imageViewFoodImage"
+        app:layout_constraintStart_toEndOf="@+id/imageViewFoodImage"
+        app:layout_constraintTop_toTopOf="@+id/imageViewFoodImage" />
 
     <ProgressBar
         android:id="@+id/progressBarUpload"
@@ -219,22 +222,21 @@
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.471"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.858" />
+        app:layout_constraintVertical_bias="0.878" />
 
     <TextView
         android:id="@+id/textViewProgress"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="116dp"
+        android:layout_marginBottom="100dp"
         android:text="0.0 %"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

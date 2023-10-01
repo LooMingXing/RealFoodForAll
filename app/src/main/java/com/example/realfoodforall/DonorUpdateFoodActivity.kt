@@ -58,6 +58,10 @@ class DonorUpdateFoodActivity : AppCompatActivity() {
             .load(foodImageUrl)
             .into(binding.imageViewUpdateFoodImage)
 
+        setSupportActionBar(binding.toolbarDonorUpdateFood)
+        supportActionBar!!.title = "Donor Update Food"
+        supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+
         binding.editTextUpdateFoodName.setText(foodName)
         binding.editTextUpdateFoodAddress.setText(foodLocation)
         binding.editTextUpdateFoodDate.setText(foodDate)
