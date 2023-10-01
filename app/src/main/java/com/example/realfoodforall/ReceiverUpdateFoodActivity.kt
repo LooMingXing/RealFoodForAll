@@ -1,5 +1,6 @@
 package com.example.realfoodforall
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -16,12 +17,10 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.StorageReference
 
 class ReceiverUpdateFoodActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityReceiverUpdateFoodBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: FirebaseDatabase
     private lateinit var mRef: DatabaseReference
-
     private lateinit var realFoodDonationId:String
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,11 +51,8 @@ class ReceiverUpdateFoodActivity : AppCompatActivity() {
         binding.textViewShowFoodName.text = foodName
         binding.textViewShowFoodLocation.text = foodLocation
         binding.textViewShowFoodDate.text = foodDate
-
         binding.textViewReceiverFoodToTime.text = foodToTime
         binding.textViewReceiverFromTime.text = foodFromTime
-
-
         binding.buttonWantFood.setOnClickListener {
             showConfirmationDialog()
         }
@@ -70,6 +66,18 @@ class ReceiverUpdateFoodActivity : AppCompatActivity() {
         builder.setPositiveButton("Yes") { _, _ ->
             // Deduct the food portion and update the database
             deductFoodPortion(1) // Deduct 1 portion, you can adjust as needed
+
+            // Get all the food details from the intent
+            val foodName = binding.textViewShowFoodName.text.toString()
+            val foodLocation = binding.textViewShowFoodLocation.text.toString()
+            val foodDate = binding.textViewShowFoodDate.text.toString()
+            val foodToTime = binding.textViewReceiverFoodToTime.text.toString()
+            val foodFromTime = binding.textViewReceiverFromTime.text.toString()
+            val foodImageUrl = intent.getStringExtra("Image") ?: ""
+
+            // Call updateHistory with all the food details and imageUrl
+            updateHistory(foodName, foodLocation, foodDate, foodToTime, foodFromTime, foodImageUrl)
+            navigateToHistoryPage()
         }
         builder.setNegativeButton("No") { _, _ ->
             // Cancel the request
@@ -80,22 +88,29 @@ class ReceiverUpdateFoodActivity : AppCompatActivity() {
 
     private fun deductFoodPortion(portionToDeduct: Int) {
         val foodDonationId = realFoodDonationId
-
         val foodPortionRef = mRef.child(foodDonationId).child("foodPortion")
 
         foodPortionRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val currentPortion = dataSnapshot.getValue(Int::class.java)
+                val currentPortionStr = dataSnapshot.getValue(String::class.java)
 
-                if (currentPortion != null && currentPortion >= portionToDeduct) {
-                    val newPortion = currentPortion - portionToDeduct
+                try {
+                    // Attempt to convert the currentPortionStr to an integer
+                    val currentPortion = currentPortionStr?.toInt()
 
-                    foodPortionRef.setValue(newPortion)
+                    if (currentPortion != null && currentPortion >= portionToDeduct) {
+                        val newPortion = (currentPortion - portionToDeduct).toString()
 
-                    Toast.makeText(this@ReceiverUpdateFoodActivity, "Food requested successfully.", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    Toast.makeText(this@ReceiverUpdateFoodActivity, "Invalid request.", Toast.LENGTH_SHORT).show()
+                        foodPortionRef.setValue(newPortion)
+
+                        Toast.makeText(this@ReceiverUpdateFoodActivity, "Food requested successfully.", Toast.LENGTH_SHORT).show()
+                        finish()
+                    } else {
+                        Toast.makeText(this@ReceiverUpdateFoodActivity, "Invalid request.", Toast.LENGTH_SHORT).show()
+                    }
+                } catch (e: NumberFormatException) {
+                    // Handle the case where the "foodPortion" field is not a valid integer
+                    Toast.makeText(this@ReceiverUpdateFoodActivity, "Invalid data format.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -104,4 +119,43 @@ class ReceiverUpdateFoodActivity : AppCompatActivity() {
             }
         })
     }
+
+    private fun updateHistory(foodName: String, foodLocation: String, foodDate: String, foodToTime: String, foodFromTime: String, imageUrl: String) {
+        val user = mAuth.currentUser
+        val userId = user?.uid
+
+        if (userId != null) {
+            // Reference to the "History" node in the database
+            val historyRef = FirebaseDatabase.getInstance().getReference("History")
+
+            // Create a new entry for the history
+            val historyEntryRef = historyRef.push()
+            val historyEntryId = historyEntryRef.key
+
+            if (historyEntryId != null) {
+                // Prepare the data for the history entry
+                val historyData = HashMap<String, Any>()
+                historyData["FoodName"] = foodName
+                historyData["FoodLocation"] = foodLocation
+                historyData["FoodDate"] = foodDate
+                historyData["FoodToTime"] = foodToTime
+                historyData["FoodFromTime"] = foodFromTime
+                historyData["foodurl"] = imageUrl
+                historyData["userid"] = userId
+                // Add more fields as needed
+
+                // Set the data for the history entry
+                historyEntryRef.setValue(historyData)
+            }
+        }
+    }
+
+
+
+    private fun navigateToHistoryPage() {
+        val intent = Intent(this, ReceiverHistoryActivity::class.java)
+        startActivity(intent)
+        finish() // Optionally, you can finish the current activity if you don't want to return to it
+    }
+
 }

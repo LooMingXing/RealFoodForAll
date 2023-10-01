@@ -32,7 +32,21 @@
     <string name="loading">Loading...</string>
     <string name="search">Search here...</string>
 
-<!--    For Receiver Food CRUD operation-->
+    <!-- New String -->
+    <string name="profile">Profile</string>
+    <string name="edit_profile">Edit Profile </string>
+    <string name="logout_profile">Logout</string>
+    <string name="terminate_acc">Terminate Account</string>
+    <string name="username_edit">Username: </string>
+    <string name="email_edit">Email: </string>
+    <string name="edit_pic">Edit Profile Picture</string>
+    <string name="confirm_edit">Confirm Edit</string>
+    <string name="reset_edit">Reset</string>
+    <string name="change_email">Change Email</string>
+    <string name="update_email">Update Email</string>
+    <string name="enter_pass_again">Enter password to change email</string>
+
+    <!--    For Receiver Food CRUD operation-->
     <string name="want_button">I want it</string>
     <string name="to">To</string>
 
@@ -51,11 +65,11 @@
     <string name="title_activity_receiver">ReceiverActivity</string>
     <string name="update_food">Update Food</string>
 
-<!--    For donor menu-->
+    <!--    For donor menu-->
     <string name="donor_profile_setting">Profile Setting</string>
     <string name="donor_logout">Logout</string>
 
-<!--    For Donor PDF report generate-->
+    <!--    For Donor PDF report generate-->
     <string name="report_generate_title">Report</string>
 
     <!-- Calorie Calculator -->

@@ -16,7 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import org.w3c.dom.Text
+
 
 class FoodAdapterClass(private val context: Context, private val foodList:ArrayList<DonorFoodData>):RecyclerView.Adapter<FoodAdapterClass.ViewHolderClass>() {
 
@@ -81,16 +81,18 @@ class FoodAdapterClass(private val context: Context, private val foodList:ArrayL
 
                 firebaseRef.child(foodDonationId).removeValue()
                     .addOnSuccessListener {
-                        Toast.makeText(context,"Item removed successfully" ,Toast.LENGTH_SHORT).show()
+                        foodList.removeAt(position)
+                        notifyItemRemoved(position)
+
+                        // Provide feedback to the user
+                        Toast.makeText(context, "Food item deleted", Toast.LENGTH_LONG).show()
+
                     }
                     .addOnFailureListener {error ->
                         Toast.makeText(context,"error ${error.message}" ,Toast.LENGTH_SHORT).show()
                     }
 
-                foodList.removeAt(position)
-                notifyItemRemoved(position)
-                // Provide feedback to the user
-                Toast.makeText(context, "Food item deleted", Toast.LENGTH_LONG).show()
+
             }
             .setNegativeButton("Cancel") { dialog, _ ->
                 Toast.makeText(context,"Cancelled" ,Toast.LENGTH_SHORT).show()

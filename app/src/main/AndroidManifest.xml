@@ -17,6 +17,30 @@
         android:theme="@style/Theme.RealFoodForAll"
         tools:targetApi="31">
         <activity
+            android:name=".ReceiverHistoryActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReceiverProfileEmailChange"
+            android:exported="false" />
+        <activity
+            android:name=".ReceiverProfileEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReceiverProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ReportActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileEditActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChangeEmailDonorPassword"
+            android:exported="false" />
+        <activity
             android:name=".ReceiverActivity"
             android:exported="false"
             android:label="@string/title_activity_receiver"
@@ -26,8 +50,7 @@
             android:exported="false" />
         <activity
             android:name=".DonorActivity"
-            android:exported="false"/>
-
+            android:exported="false" />
         <activity
             android:name=".ForgetPasswordActivity"
             android:exported="false" />
@@ -43,11 +66,11 @@
         <activity
             android:name=".DonorUpdateFoodActivity"
             android:exported="false"
-            android:parentActivityName=".DonorActivity"/>
+            android:parentActivityName=".DonorActivity" />
         <activity
             android:name=".DonorCreateFoodActivity"
             android:exported="false"
-            android:parentActivityName=".DonorActivity"/>
+            android:parentActivityName=".DonorActivity" />
         <activity
             android:name=".RegisterActivity"
             android:exported="false" />

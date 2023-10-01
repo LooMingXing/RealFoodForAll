@@ -136,7 +136,7 @@ class DonorActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId){
             R.id.donor_profile ->{
-                val intent = Intent(this, DonorCreateFoodActivity::class.java)
+                val intent = Intent(this, ProfileActivity::class.java)
                 startActivity(intent)
                 finish()
             }
