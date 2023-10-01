@@ -3,6 +3,10 @@ package com.example.realfoodforall
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.realfoodforall.databinding.ActivityDonorBinding
@@ -31,7 +35,10 @@ class DonorActivity : AppCompatActivity() {
         binding = ActivityDonorBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        mAuth = FirebaseAuth.getInstance()
+
         setSupportActionBar(binding.toolbarDonorHome)
+
 
 
         val gridLayoutManager = GridLayoutManager(this@DonorActivity, 1)
@@ -81,5 +88,31 @@ class DonorActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
+        val inflater: MenuInflater = menuInflater
+        inflater.inflate(R.menu.donor_menu_navigate, menu)
+        return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when(item.itemId){
+            R.id.donor_profile ->{
+                val intent = Intent(this, DonorCreateFoodActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+
+            R.id.donor_logout -> {
+                mAuth.signOut()
+                Toast.makeText(baseContext, "Logout Successfully!", Toast.LENGTH_LONG).show()
+                val intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+
+        }
+
+        return super.onOptionsItemSelected(item)
     }
 }

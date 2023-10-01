@@ -85,7 +85,7 @@ class ReceiverUpdateFoodActivity : AppCompatActivity() {
 
         foodPortionRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(dataSnapshot: DataSnapshot) {
-                val currentPortion = dataSnapshot.getValue(Int::class.java).()
+                val currentPortion = dataSnapshot.getValue(Int::class.java)
 
                 if (currentPortion != null && currentPortion >= portionToDeduct) {
                     val newPortion = currentPortion - portionToDeduct

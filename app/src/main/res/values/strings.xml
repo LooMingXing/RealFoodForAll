@@ -49,6 +49,10 @@
     <string name="title_activity_receiver">ReceiverActivity</string>
     <string name="update_food">Update Food</string>
 
+<!--    For donor menu-->
+    <string name="donor_profile_setting">Profile Setting</string>
+    <string name="donor_logout">Logout</string>
+
 <!--    For Donor PDF report generate-->
     <string name="report_generate_title">Report</string>
 
