@@ -30,6 +30,7 @@
     <string name="show_food_location">Location : </string>
     <string name="show_food_name">Food : </string>
     <string name="loading">Loading...</string>
+    <string name="search">Search here...</string>
 
 <!--    For Receiver Food CRUD operation-->
     <string name="want_button">I want it</string>

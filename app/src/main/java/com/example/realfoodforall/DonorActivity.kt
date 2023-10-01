@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.GridLayoutManager
@@ -16,8 +17,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.Query
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import java.util.Locale
 
 class DonorActivity : AppCompatActivity() {
 
@@ -29,6 +32,9 @@ class DonorActivity : AppCompatActivity() {
     private lateinit var foodList: ArrayList<DonorFoodData>
     private lateinit var adapter: FoodAdapterClass
     var eventListener:ValueEventListener? = null
+
+    private lateinit var searchViewDonor: SearchView
+    private lateinit var searchList: ArrayList<DonorFoodData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,8 +54,11 @@ class DonorActivity : AppCompatActivity() {
         val dialog = builder.create()
         dialog.show()
 
-        foodList = ArrayList()
-        adapter = FoodAdapterClass(this@DonorActivity, foodList)
+        foodList = arrayListOf<DonorFoodData>()
+        searchList = arrayListOf<DonorFoodData>()
+        searchViewDonor = binding.searchViewDonor
+
+        adapter = FoodAdapterClass(this@DonorActivity, searchList)
         binding.recyclerViewFoodDonation.adapter = adapter
         mRef = FirebaseDatabase.getInstance().getReference("FoodDonation")
         dialog.show()
@@ -68,6 +77,7 @@ class DonorActivity : AppCompatActivity() {
                     }
 
                 }
+                searchList.addAll(foodList)
                 adapter.notifyDataSetChanged()
                 dialog.dismiss()
             }
@@ -76,6 +86,32 @@ class DonorActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
 
+        })
+
+        searchViewDonor.clearFocus()
+        searchViewDonor.setOnQueryTextListener(object :SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String?): Boolean {
+                searchViewDonor.clearFocus()
+                return true
+            }
+
+            override fun onQueryTextChange(newText: String?): Boolean {
+                searchList.clear()
+                val searchText = newText!!.toLowerCase(Locale.getDefault())
+                if(searchText.isNotEmpty()){
+                    foodList.forEach{
+                        if(it.foodName?.toLowerCase(Locale.getDefault())!!.contains(searchText)){
+                            searchList.add(it)
+                        }
+                    }
+                    adapter.notifyDataSetChanged()
+                }else{
+                    searchList.clear()
+                    searchList.addAll(foodList)
+                    adapter.notifyDataSetChanged()
+                }
+                return false
+            }
         })
 
         binding.floatingActionButtonAddFood.setOnClickListener{
@@ -89,6 +125,7 @@ class DonorActivity : AppCompatActivity() {
         }
 
     }
+
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         val inflater: MenuInflater = menuInflater
