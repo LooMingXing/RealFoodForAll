@@ -23,6 +23,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="action_settings">Settings</string>
+    <string name="choose_pic_profile">Choose an Image</string>
 
     <!--    For recyclerView-->
     <string name="show_food_portion">Portion: </string>

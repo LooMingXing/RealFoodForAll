@@ -1,22 +1,29 @@
 package com.example.realfoodforall
 
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import com.example.realfoodforall.databinding.ActivityRegisterBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 
 class RegisterActivity : AppCompatActivity() {
     private lateinit var binding: ActivityRegisterBinding
     private lateinit var mAuth: FirebaseAuth
     private lateinit var mDatabase: FirebaseDatabase
     private lateinit var mRef: DatabaseReference
+
+    private lateinit var mStorageRef: StorageReference
+    private lateinit var imageUri : Uri
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,6 +33,24 @@ class RegisterActivity : AppCompatActivity() {
         mAuth = FirebaseAuth.getInstance()
         mDatabase = FirebaseDatabase.getInstance()
         mRef = mDatabase?.reference!!.child("user")
+
+        //        For Firebase storage image
+        mStorageRef = FirebaseStorage.getInstance().getReference("profile_pic")
+
+        //        For fetching the image uri!
+        val pickImageFromGalleryForResult =
+            registerForActivityResult(ActivityResultContracts.GetContent()) {
+                binding.imageViewProfilePic.setImageURI(it)
+
+                if (it != null) {
+                    imageUri = it
+                }
+            }
+
+        // for open gallery to choose image
+        binding.buttonProfilePic.setOnClickListener {
+            pickImageFromGalleryForResult.launch("image/*")
+        }
 
         binding.buttonRegister.setOnClickListener {
             val username = binding.editTextUsername.text.toString()
@@ -68,6 +93,31 @@ class RegisterActivity : AppCompatActivity() {
                 startActivity(intent)
             }
         }
+
+        binding.textViewSignIn.setOnClickListener {
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
+        }
+    }
+
+    private fun uploadImageToStorage(uid: String?) {
+        val storageRef =
+            mStorageRef.child("$uid/profilePic") // Create a reference with the UID as a subfolder
+
+        storageRef.putFile(imageUri)
+            .addOnSuccessListener { taskSnapshot ->
+                // Handle a successful upload
+                // Get the download URL of the uploaded image
+                taskSnapshot.storage.downloadUrl.addOnSuccessListener { downloadUrl ->
+                    // Once you have the download URL, save it to the Realtime Database
+                    saveImageUriToDatabase(uid, downloadUrl.toString())
+                }
+            }
+    }
+
+    private fun saveImageUriToDatabase(uid: String?, uri: String) {
+        val addToDatabase = mRef.child(uid!!)
+        addToDatabase.child("profilePic").setValue(uri) // Save the URI as a string in the database
     }
 
     private fun registerUser(username:String, email:String, password:String, role:String){
@@ -81,6 +131,8 @@ class RegisterActivity : AppCompatActivity() {
                     addToDatabase.child("username").setValue(username)
                     addToDatabase.child("email").setValue(email)
                     addToDatabase.child("role").setValue(role)
+
+                    uploadImageToStorage(currentUser?.uid)
 
                     Toast.makeText(baseContext,"User has been registered successfully!", Toast.LENGTH_LONG).show()
                     val intent = Intent(this, MainActivity::class.java)

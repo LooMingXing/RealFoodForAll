@@ -47,7 +47,6 @@ class DonorCreateFoodActivity : AppCompatActivity() {
 
 
         setSupportActionBar(binding.toolbarDonorCreateFood)
-
         supportActionBar!!.title = "Donor Create Food"
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
 
