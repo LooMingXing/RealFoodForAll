@@ -1,5 +1,6 @@
 package com.example.realfoodforall
 
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -28,6 +29,10 @@ class DonorCreateFoodActivity : AppCompatActivity() {
 
     private lateinit var mStorageRef: StorageReference
     private lateinit var imageUri : Uri
+
+//    For TimePicker
+    private var selectedFromTime: String = ""
+    private var selectedToTime: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +69,15 @@ class DonorCreateFoodActivity : AppCompatActivity() {
         // for open gallery to choose image
         binding.buttonChooseImage.setOnClickListener {
             pickImageFromGalleryForResult.launch("image/*")
+        }
+
+//        For TimePicker
+        binding.editTextFromTime.setOnClickListener {
+            showTimePickerDialog(true)
+        }
+
+        binding.editTextToTime.setOnClickListener {
+            showTimePickerDialog(false)
         }
 
         binding.buttonConfirmDonation.setOnClickListener {
@@ -181,5 +195,50 @@ class DonorCreateFoodActivity : AppCompatActivity() {
                 }
         }
 
+    }
+
+    private fun showTimePickerDialog(isFromTime: Boolean) {
+        val calendar = Calendar.getInstance()
+        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val selectedHour = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
+                val selectedMinute = if (minute < 10) "0$minute" else minute.toString()
+                val selectedTime = "$selectedHour:$selectedMinute"
+
+                if (isFromTime) {
+                    selectedFromTime = selectedTime
+                    binding.editTextFromTime.setText(selectedFromTime)
+                } else {
+                    // Check if ToTime is not earlier than FromTime
+                    if (isToTimeValid(selectedTime, selectedFromTime)) {
+                        selectedToTime = selectedTime
+                        binding.editTextToTime.setText(selectedToTime)
+                    } else {
+                        Toast.makeText(
+                            this,
+                            "To Time cannot be earlier than From Time!!",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
+                }
+            },
+            hourOfDay,
+            minute,
+            false // Set 24-hour format to false to display AM/PM
+        )
+
+        timePickerDialog.show()
+    }
+
+    private fun isToTimeValid(toTime: String, fromTime: String): Boolean {
+        val sdf = SimpleDateFormat("hh:mm", Locale.getDefault())
+        val toTimeDate = sdf.parse(toTime)
+        val fromTimeDate = sdf.parse(fromTime)
+
+        return !toTimeDate.before(fromTimeDate)
     }
 }

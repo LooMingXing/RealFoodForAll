@@ -1,5 +1,6 @@
 package com.example.realfoodforall
 
+import android.app.TimePickerDialog
 import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
@@ -15,6 +16,9 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import java.text.SimpleDateFormat
+import java.util.Calendar
+import java.util.Locale
 
 class DonorUpdateFoodActivity : AppCompatActivity() {
 
@@ -29,6 +33,10 @@ class DonorUpdateFoodActivity : AppCompatActivity() {
     private var imageUri : Uri? = null
 
     private lateinit var realFoodDonationId:String
+
+    //    For TimePicker
+    private var selectedUpdateFromTime: String = ""
+    private var selectedUpdateToTime: String = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -84,6 +92,15 @@ class DonorUpdateFoodActivity : AppCompatActivity() {
             pickImageFromGalleryForResult.launch("image/*")
         }
 
+        //For TimePicker
+        binding.editTextUpdateFromTime.setOnClickListener {
+            showUpdateTimePickerDialogFromTime(true)
+        }
+
+        binding.editTextUpdateToTime.setOnClickListener {
+            showUpdateTimePickerDialogToTime(true)
+        }
+
         binding.buttonUpdateFoodDonation.setOnClickListener {
             val updatedFoodName = binding.editTextUpdateFoodName.text.toString()
             val updatedFoodPortion = binding.editTextUpdateFoodPortion.text.toString()
@@ -115,7 +132,11 @@ class DonorUpdateFoodActivity : AppCompatActivity() {
             if (updatedFoodFromTime.isEmpty()) {
                 binding.editTextUpdateFromTime.error = "Food from time cannot be empty"
             }
-            Log.d("first", "firsthahahahaa")
+
+            if(!isToTimeValid(updatedFoodToTime, updatedFoodFromTime)){
+                binding.editTextUpdateToTime.error= "To Time cannot be earlier than From Time!!"
+                return@setOnClickListener
+            }
 
             updateFoodToDb(realFoodDonationId, binding.editTextUpdateFoodName.text.toString(), binding.editTextUpdateFoodPortion.text.toString(),
                 binding.editTextUpdateFoodDate.text.toString(), binding.editTextUpdateFoodAddress.text.toString(),
@@ -215,5 +236,65 @@ class DonorUpdateFoodActivity : AppCompatActivity() {
                         .show()
                 }
         }
+    }
+
+    private fun showUpdateTimePickerDialogFromTime(isFromTime: Boolean) {
+        val calendar = Calendar.getInstance()
+        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val selectedHour = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
+                val selectedMinute = if (minute < 10) "0$minute" else minute.toString()
+                val selectedTime = "$selectedHour:$selectedMinute"
+
+                if (isFromTime) {
+                    selectedUpdateFromTime = selectedTime
+                    binding.editTextUpdateFromTime.setText(selectedUpdateFromTime)
+                }
+            },
+            hourOfDay,
+            minute,
+            false
+        )
+
+        timePickerDialog.show()
+    }
+
+    private fun showUpdateTimePickerDialogToTime(isFromTime: Boolean) {
+        val calendar = Calendar.getInstance()
+        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
+        val minute = calendar.get(Calendar.MINUTE)
+
+        val timePickerDialog = TimePickerDialog(
+            this,
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
+                val selectedHour = if (hourOfDay < 10) "0$hourOfDay" else hourOfDay.toString()
+                val selectedMinute = if (minute < 10) "0$minute" else minute.toString()
+                val selectedTime = "$selectedHour:$selectedMinute"
+
+                if(isFromTime){
+                    selectedUpdateToTime = selectedTime
+                    binding.editTextUpdateToTime.setText(selectedUpdateToTime)
+                }
+
+            },
+            hourOfDay,
+            minute,
+            false
+        )
+
+        timePickerDialog.show()
+    }
+
+    private fun isToTimeValid(toTime: String, fromTime: String): Boolean {
+
+        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+        val toTimeDate = sdf.parse(toTime)
+        val fromTimeDate = sdf.parse(fromTime)
+
+        return !toTimeDate.before(fromTimeDate)
     }
 }

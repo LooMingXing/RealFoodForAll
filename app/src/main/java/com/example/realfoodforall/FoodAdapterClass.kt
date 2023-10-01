@@ -61,7 +61,7 @@ class FoodAdapterClass(private val context: Context, private val foodList:ArrayL
 
         holder.rvDeleteButton.setOnClickListener {
             showDeleteConfirmationDialog(position)
-            true // Indicate that the long click event is consumed
+            true
         }
 
     }
