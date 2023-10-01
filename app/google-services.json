@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "577657340336",
+    "project_id": "realfoodforall-3d55a",
+    "storage_bucket": "realfoodforall-3d55a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:577657340336:android:ba4ee13791713cbb1fd675",
+        "android_client_info": {
+          "package_name": "com.example.realfoodforall"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCnvXz4Nq4RAmVn0IG4CUEXVx-y45lt1TE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
