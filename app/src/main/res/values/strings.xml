@@ -25,7 +25,7 @@
     <string name="action_settings">Settings</string>
 
     <!--    For recyclerView-->
-    <string name="show_food_portion">Portion : </string>
+    <string name="show_food_portion">Portion: </string>
     <string name="show_food_location">Location : </string>
     <string name="show_food_name">Food : </string>
     <string name="loading">Loading...</string>

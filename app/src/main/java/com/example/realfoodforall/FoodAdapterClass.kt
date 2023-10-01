@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -24,6 +25,8 @@ class FoodAdapterClass(private val context: Context, private val foodList:ArrayL
         val rvFoodPortion:TextView = itemView.findViewById(R.id.foodPortionItem)
         val rvFoodImage:ImageView = itemView.findViewById(R.id.foodImageItem)
         val foodCard:CardView = itemView.findViewById(R.id.foodCard)
+        val rvEditButton:Button = itemView.findViewById(R.id.buttonEditFoodDonation)
+        val rvDeleteButton:Button = itemView.findViewById(R.id.buttonDeleteFoodDonation)
 
     }
 
@@ -42,7 +45,7 @@ class FoodAdapterClass(private val context: Context, private val foodList:ArrayL
         holder.rvFoodPortion.text = currentItem.foodPortion
         Glide.with(context).load(currentItem.foodURL).into(holder.rvFoodImage)
 
-        holder.foodCard.setOnClickListener{
+        holder.rvEditButton.setOnClickListener{
             val intent = Intent(context, DonorUpdateFoodActivity::class.java)
             intent.putExtra("Food Donation Id", foodList[holder.adapterPosition].foodDonationId)
             intent.putExtra("Image", foodList[holder.adapterPosition].foodURL)
@@ -56,7 +59,7 @@ class FoodAdapterClass(private val context: Context, private val foodList:ArrayL
             context.startActivity(intent)
         }
 
-        holder.foodCard.setOnLongClickListener {
+        holder.rvDeleteButton.setOnClickListener {
             showDeleteConfirmationDialog(position)
             true // Indicate that the long click event is consumed
         }
